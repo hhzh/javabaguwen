@@ -14,6 +14,11 @@ export default navbar([
         link: "/interview/",
     },
     {
+        text: "算法",
+        icon: "algo",
+        link: "/algo/",
+    },
+    {
         text: "工具",
         icon: "tool",
         link: "/tool/",
