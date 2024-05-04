@@ -194,7 +194,7 @@ export default sidebar({
             ]
         },
         {
-            text: "四、MySQL",
+            text: "五、JVM",
             collapsible: true,
             prefix: "mysql/",
             children: [

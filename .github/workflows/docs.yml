@@ -39,7 +39,7 @@ jobs:
           pnpm docs:build
           git config --local user.email "oointer@163.com"
           git config --local user.name "hhzh-pages"
-          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/javabaguwen.git gh-pages
+          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/hhzh.git gh-pages
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
