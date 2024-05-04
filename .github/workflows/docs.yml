@@ -39,7 +39,9 @@ jobs:
           pnpm docs:build
           git config --local user.email "oointer@163.com"
           git config --local user.name "hhzh-pages"
-          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/hhzh.git gh-pages
+          git add .
+          git commit -m "Update pages"
+          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/hhzh.git master
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
@@ -47,7 +49,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v4
         with:
           # 部署到 gh-pages 分支
-          target_branch: gh-pages
+          target_branch: master
           # 部署目录为 VuePress 的默认输出目录
           build_dir: src/.vuepress/dist
 #          repo: hhzh/hhzh
