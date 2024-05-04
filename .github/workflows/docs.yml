@@ -37,9 +37,9 @@ jobs:
       - name: Build VuePress site
         run: |
           pnpm docs:build
-          git config --local user.email "oointer@163.com"
-          git config --local user.name "hhzh-pages"
-          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/hhzh.git gh-pages
+#          git config --local user.email "oointer@163.com"
+#          git config --local user.name "hhzh-pages"
+#          git push --force https://hhzh:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/hhzh/hhzh.git gh-pages
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
@@ -50,7 +50,7 @@ jobs:
           target_branch: gh-pages
           # 部署目录为 VuePress 的默认输出目录
           build_dir: src/.vuepress/dist
-          repo: hhzh/hhzh
+#          repo: hhzh/hhzh
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
