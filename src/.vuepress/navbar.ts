@@ -2,11 +2,11 @@ import {navbar} from "vuepress-theme-hope";
 
 export default navbar([
     "/",
-    "/demo/",
+    "demo/",
     {
         text: "Java八股文",
         icon: "eight",
-        link: "/eight/",
+        link: "/home.md",
     },
     {
         text: "面试流程",
@@ -22,5 +22,10 @@ export default navbar([
         text: "工具",
         icon: "tool",
         link: "/tool/",
+    },
+    {
+        text: "关于",
+        icon: "about",
+        link: "/about/",
     },
 ]);
