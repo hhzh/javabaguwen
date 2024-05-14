@@ -11,7 +11,15 @@ export default sidebar({
     ],
     "/tool/": [
         "README.md",
-        "map",
+        "Git",
+        "Linux",
+        "Maven",
+        "Arthas",
+        "Nginx",
+        "JUnit",
+        "TestNG",
+        "Mockito",
+        "CodeReview",
     ],
     "/about/": [
         "README.md",
@@ -100,96 +108,100 @@ export default sidebar({
                     link: "engine",
                 },
                 {
-                    text: "4. MySQL B+树索引",
+                    text: "4.3 MySQL B+树索引",
                     link: "b",
                 },
                 {
-                    text: "4. MySQL Explain详解",
+                    text: "4.4 MySQL Explain详解",
                     link: "explain",
                 },
                 {
-                    text: "4. MySQL索引失效",
+                    text: "4.5 MySQL索引失效",
                     link: "expire",
                 },
                 {
-                    text: "4. MySQL日志",
+                    text: "4.6 MySQL日志",
                     link: "log",
                 },
                 {
-                    text: "4. 慢查询日志",
+                    text: "4.7 慢查询日志",
                     link: "slow",
                 },
                 {
-                    text: "4. MySQL锁",
+                    text: "4.8 MySQL锁",
                     link: "lock",
                 },
                 {
-                    text: "4. MySQL加锁范围",
+                    text: "4.9 MySQL加锁范围",
                     link: "range",
                 },
                 {
-                    text: "4. MySQL死锁",
+                    text: "4.10 MySQL死锁",
                     link: "dead",
                 },
                 {
-                    text: "4. MySQL事务",
+                    text: "4.11 MySQL事务",
                     link: "transaction",
                 },
                 {
-                    text: "4. MySQL主从同步",
+                    text: "4.12 MySQL主从同步",
                     link: "sync",
                 },
                 {
-                    text: "4. MySQL深分页问题",
+                    text: "4.13 MySQL深分页问题",
                     link: "page",
                 },
                 {
-                    text: "4. 创建MySQL索引",
+                    text: "4.14 创建MySQL索引",
                     link: "create",
                 },
                 {
-                    text: "4. MySQL使用规范",
+                    text: "4.15 MySQL使用规范",
                     link: "standard",
                 },
                 {
-                    text: "4. MySQL索引下推",
+                    text: "4.16 MySQL索引下推",
                     link: "push",
                 },
                 {
-                    text: "4. MySQL备份数据",
-                    link: "",
-                },
-                {
-                    text: "4. MySQL幻读",
+                    text: "4.17 MySQL备份数据",
                     link: "backup",
                 },
                 {
-                    text: "4. MySQL索引跳跃",
+                    text: "4.18 MySQL幻读",
+                    link: "phantom",
+                },
+                {
+                    text: "4.19 MySQL索引跳跃",
                     link: "skip",
                 },
                 {
-                    text: "4. MySQL锁超时",
+                    text: "4.20 MySQL锁超时",
                     link: "timeout",
                 },
                 {
-                    text: "4. 分析MySQL性能",
+                    text: "4.21 分析MySQL性能",
                     link: "performance",
                 },
                 {
-                    text: "4. 在线加字段",
+                    text: "4.22 在线加字段",
                     link: "online",
                 },
                 {
-                    text: "4. MySQL二阶段提交",
+                    text: "4.23 MySQL二阶段提交",
                     link: "second",
                 },
                 {
-                    text: "4. 优化SQL查询流程",
+                    text: "4.24 优化SQL查询流程",
                     link: "optimize",
                 },
                 {
-                    text: "4. 数据库三范式",
+                    text: "4.25 数据库三范式",
                     link: "three",
+                },
+                {
+                    text: "4.26 存储引擎",
+                    link: "engine",
                 },
             ]
         },
