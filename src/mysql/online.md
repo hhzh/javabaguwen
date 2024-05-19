@@ -1,7 +1,7 @@
 ## 1. 问题：怎么给线上表加字段？
 工作中最常遇到的问题，怎么给线上频繁使用的大表添加字段？
 比如：给下面的用户表（user）添加年龄（age）字段。
-```
+```sql
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(100) DEFAULT NULL COMMENT '姓名',
@@ -9,11 +9,11 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB COMMENT='用户表';
 ```
 有同学会说，这还不简单，直接加不加完了，用下面的命令：
-```
+```sql
 ALTER TABLE `user` ADD `age` int NOT NULL DEFAULT '0' COMMENT '年龄';
 ```
 添加完，再查看一下表结构：
-```
+```sql
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(100) DEFAULT NULL COMMENT '姓名',
@@ -24,7 +24,7 @@ CREATE TABLE `user` (
 这不是添加成功了吗？有什么呀！
 是的，线下数据库怎么整都行，但是如果在线上数据库这样操作，整个服务都有宕机的风险！自己也离毕业不远了。
 不是危言耸听，我们找个case测试一下：
-![image-20220930113928755.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686489361799-be5ee556-be2b-4cc9-b609-3ab9637b26d9.png#averageHue=%23f6f3e6&clientId=u04d010b7-2d98-4&from=paste&height=652&id=u0d47ee66&originHeight=652&originWidth=1528&originalType=binary&ratio=1&rotation=0&showTitle=false&size=61171&status=done&style=none&taskId=u06ec6b73-5263-4328-8fc8-ba0076e3748&title=&width=1528)
+![image-20220930113928755.png](https://javabaguwen.com/img/Online%20DDL1.png)
 
 1. Session1启动了一个事务，没有提交。
 2. Session2执行添加列的操作，被阻塞。
@@ -33,7 +33,7 @@ CREATE TABLE `user` (
 为什么会出现这种情况呢？
 原因是在执行查询语句的时候，MySQL自动加了**MDL锁（metadata lock，即元数据锁）**。
 不行的话，我们可以再执行一下**show processlist**命令，查看有哪些正在执行的进程：
-![image-20220930115621212.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686489370419-9c34a3fd-0109-4b8a-be18-1ba378a6609e.png#averageHue=%23f3d8d5&clientId=u04d010b7-2d98-4&from=paste&height=450&id=u612e01b3&originHeight=450&originWidth=2508&originalType=binary&ratio=1&rotation=0&showTitle=false&size=292945&status=done&style=none&taskId=ucf63f866-e42b-4d89-b744-a38f81125c4&title=&width=2508)
+![image-20220930115621212.png](https://javabaguwen.com/img/Online%20DDL2.png)
 可以清楚的看到Session2和Session3的语句正在等待MDL锁，**Waiting for table metadata lock**。
 **MDL锁**的作用是什么？
 为了保证并发操作下数据的一致性。
@@ -46,9 +46,9 @@ MDL锁是MySQL自动隐式加锁，无需我们手动操作。
 注意：MDL锁是表锁，会对整张表加锁。
 
 普及额外的小知识点，什么是DML和DDL：
-**DML（Data Manipulation Language）数据操纵语言：**
+- **DML（Data Manipulation Language）数据操纵语言：**
 适用范围：对表数据进行操作，比如 insert、delete、select、update等。
-**DDL（Data Definition Language）数据定义语言：**
+- **DDL（Data Definition Language）数据定义语言：**
 适用范围：对表结构进行操作，比如create、drop、alter、rename、truncate等。
 ## 3. 如何优雅的给线上表加字段
 既然修改表结构的时候，MySQL会自动添加表锁，并且是写锁，会阻塞后续的所有读写请求，造成非常严重的后果。
@@ -58,7 +58,7 @@ MDL锁是MySQL自动隐式加锁，无需我们手动操作。
 从MySQL8.0版本开始又优化了**Online DDL**，支持快速添加列，可以实现给大表秒级加字段。
 具体用法就是在DDL语句后面增加两个参数**ALGORITHM**和**LOCK**。
 比如下面这样：
-```
+```sql
 ALTER TABLE `user` ADD `age` int NOT NULL DEFAULT '0' COMMENT '年龄', 
 ALGORITHM=Inplace, 
 LOCK=NONE;

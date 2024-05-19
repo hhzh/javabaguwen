@@ -26,7 +26,7 @@ CREATE TABLE `user` (
 ```
 explain select * from user where name='一灯' and age>2;
 ```
-![](https://files.mdnice.com/user/33013/b8b52851-0e16-4a46-a0cc-c7e42f6ef574.png#id=QLqNr&originHeight=254&originWidth=1976&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A81.png)
 执行计划中的Extra列显示了**Using index condition**，表示用到了**索引下推**的优化逻辑。
 ## 3. 索引下推配置
 查看**索引下推**的配置：
@@ -59,9 +59,9 @@ set optimizer_switch="index_condition_pushdown=off";
 1. 先在联合索引上找到name=‘一灯’的3个主键ID
 2. 再根据查到3个主键ID，去主键索引上找到3行记录
 
-![](https://files.mdnice.com/user/33013/997d4cdd-e4c4-4eed-a0bc-a398f8527827.png#id=sGcB1&originHeight=1600&originWidth=1938&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A82.png)
 下面这张图是存储引擎返回给MySQL Server端的处理过程：
-![](https://files.mdnice.com/user/33013/08afd518-2563-4400-ab58-b646c671ccb7.png#id=TWsyI&originHeight=720&originWidth=728&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A83.png)
 我们再看一下在使用**索引下推**的情况，查询过程是这样的：
 
 1. 存储引擎根据where条件中name索引字段，找到符合条件的3行记录，再用age条件筛选出符合条件一个主键ID
@@ -69,9 +69,9 @@ set optimizer_switch="index_condition_pushdown=off";
 3. 把数据返回给MySQL Server层
 4. 返回给客户端
 
-![](https://files.mdnice.com/user/33013/18abfb42-e119-44ac-bcbc-b6571e6d029a.png#id=IY2lq&originHeight=795&originWidth=971&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A84.png)
 
-![](https://files.mdnice.com/user/33013/d9cd1b61-c4c2-4c93-8bd1-901c04936a10.png#id=RUHU5&originHeight=707&originWidth=721&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A85.png)
 
 现在是不是理解了**索引下推**的两个作用：
 
@@ -89,4 +89,4 @@ set optimizer_switch="index_condition_pushdown=off";
 
 再附一张Explain执行计划详解图：
 
-![](https://files.mdnice.com/user/33013/22878ae5-52f1-44aa-a76f-8f3fca81d7b9.png#id=CKa4w&originHeight=2238&originWidth=1856&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A86.png)

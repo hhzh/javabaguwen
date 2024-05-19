@@ -11,15 +11,15 @@ export default sidebar({
     ],
     "/tool/": [
         "README.md",
-        "Git",
-        "Linux",
-        "Maven",
-        "Arthas",
-        "Nginx",
-        "JUnit",
-        "TestNG",
-        "Mockito",
+        "git",
         "CodeReview",
+        // "Linux",
+        // "Maven",
+        // "Arthas",
+        // "Nginx",
+        // "JUnit",
+        // "TestNG",
+        // "Mockito",
     ],
     "/about/": [
         "README.md",
@@ -108,15 +108,15 @@ export default sidebar({
                     link: "engine",
                 },
                 {
-                    text: "4.3 MySQL B+树索引",
+                    text: "4.3 B+树索引",
                     link: "b",
                 },
                 {
-                    text: "4.4 MySQL Explain详解",
+                    text: "4.4 Explain执行计划",
                     link: "explain",
                 },
                 {
-                    text: "4.5 MySQL索引失效",
+                    text: "4.5 索引失效场景",
                     link: "expire",
                 },
                 {
@@ -136,19 +136,19 @@ export default sidebar({
                     link: "range",
                 },
                 {
-                    text: "4.10 MySQL死锁",
+                    text: "4.10 死锁",
                     link: "dead",
                 },
                 {
-                    text: "4.11 MySQL事务",
+                    text: "4.11 事务",
                     link: "transaction",
                 },
                 {
-                    text: "4.12 MySQL主从同步",
+                    text: "4.12 主从同步",
                     link: "sync",
                 },
                 {
-                    text: "4.13 MySQL深分页问题",
+                    text: "4.13 深分页问题",
                     link: "page",
                 },
                 {
@@ -160,23 +160,23 @@ export default sidebar({
                     link: "standard",
                 },
                 {
-                    text: "4.16 MySQL索引下推",
+                    text: "4.16 索引下推",
                     link: "push",
                 },
                 {
-                    text: "4.17 MySQL备份数据",
+                    text: "4.17 备份数据",
                     link: "backup",
                 },
                 {
-                    text: "4.18 MySQL幻读",
+                    text: "4.18 幻读问题",
                     link: "phantom",
                 },
                 {
-                    text: "4.19 MySQL索引跳跃",
+                    text: "4.19 索引跳跃",
                     link: "skip",
                 },
                 {
-                    text: "4.20 MySQL锁超时",
+                    text: "4.20 锁超时",
                     link: "timeout",
                 },
                 {
@@ -188,7 +188,7 @@ export default sidebar({
                     link: "online",
                 },
                 {
-                    text: "4.23 MySQL二阶段提交",
+                    text: "4.23 二阶段提交",
                     link: "second",
                 },
                 {
@@ -200,8 +200,8 @@ export default sidebar({
                     link: "three",
                 },
                 {
-                    text: "4.26 存储引擎",
-                    link: "engine",
+                    text: "4.26 MVCC",
+                    link: "mvcc",
                 },
             ]
         },

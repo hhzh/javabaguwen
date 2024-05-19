@@ -9,25 +9,25 @@
 ### 普通索引
 普通索引就是最基本的索引，没有任何限制。
 可以使用命令创建普通索引：
-```
+```sql
 ALTER TABLE `table_name` ADD INDEX index_name (`column`);
 ```
 ### 唯一索引
 与普通索引不同，唯一索引的列值必须唯一，允许为null。
 创建方式是这样的：
-```
+```sql
 ALTER TABLE `table_name` ADD UNIQUE index_name (`column`);
 ```
 ### 主键索引
 主键索引是一种特殊的唯一索引，并且一张表只有一个主键，不允许为null。
 创建方式是这样的：
-```
+```sql
 ALTER TABLE `table_name` ADD PRIMARY KEY (`column`);
 ```
 ### 联合索引
 联合索引是同时在多个字段上创建索引，查询效率更高。
 创建方式是这样的：
-```
+```sql
 ALTER TABLE `table_name` ADD INDEX index_name (`column1`, `column2`, `column3`);
 ```
 ### 全文索引
@@ -56,9 +56,9 @@ select
     count(distinct gender)/count(*) 
 from user;
 ```
-![image-20220730230017044.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488340317-0f9261e0-28d4-4b0a-9900-30b7d2249d90.png#averageHue=%23f3f3f2&clientId=u1727f877-ba97-4&from=paste&height=442&id=ub38b938f&originHeight=442&originWidth=902&originalType=binary&ratio=1&rotation=0&showTitle=false&size=120413&status=done&style=none&taskId=uc1009c72-8610-49c8-9d3a-4a265cf6d9a&title=&width=902)
+![image-20220730230017044.png](https://javabaguwen.com/img/%E5%88%9B%E5%BB%BAMySQL%E7%B4%A2%E5%BC%951.png)
 对于已经创建好的索引，我们还可以使用MySQL命令查看每个索引的区分度排名：
-![image-20220730230358758.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488349659-4786a1ee-e0b4-4f6e-ab94-9ce480796b1d.png#averageHue=%23eeeeed&clientId=u1727f877-ba97-4&from=paste&height=518&id=ucedd2cd6&originHeight=518&originWidth=2048&originalType=binary&ratio=1&rotation=0&showTitle=false&size=259138&status=done&style=none&taskId=u5c991eb6-b8ce-4400-8aaf-bdefd44ce5d&title=&width=2048)
+![image-20220730230358758.png](https://javabaguwen.com/img/%E5%88%9B%E5%BB%BAMySQL%E7%B4%A2%E5%BC%952.png)
 图中**Cardinality**列表示索引的区分度排名，也被称为基数。
 ### 2.4 有序的字段适合创建索引
 有序的字段在插入数据库的过程中，仍能保持B+树的索引结构，不需要频繁更新索引文件，性能更好。
@@ -75,11 +75,11 @@ from user;
 ## 4. 创建索引的其他注意事项
 ### 4.1 优先使用联合索引
 查询的时候，联合索引比普通索引能更精准的匹配到所需数据。
-![image-20220730232213888.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488360837-5d4347df-cc1b-4602-a302-0316e4dd612b.png#averageHue=%23e2e9e1&clientId=u1727f877-ba97-4&from=paste&height=826&id=u8705fe7f&originHeight=826&originWidth=1382&originalType=binary&ratio=1&rotation=0&showTitle=false&size=417493&status=done&style=none&taskId=uc85c8199-e083-4653-8bb9-16fe806e508&title=&width=1382)
+![image-20220730232213888.png](https://javabaguwen.com/img/%E5%88%9B%E5%BB%BAMySQL%E7%B4%A2%E5%BC%953.png)
 图中就是在（age，name）两个字段上建立的联合索引，在B+树中的存储结构。
 可以看出，是先age排序，age相等的数据，再按name排序。
 对于这条查询SQL：
-```
+```sql
 select age,name from user where age=18 and name='李四';
 ```
 联合索引只需一次就可以查到所需数据，如果我们只在age字段上建立索引，会先匹配到age=18的三条数据，然后再逐个遍历，效率更差，所以平时应该优先使用联合索引。
@@ -98,4 +98,4 @@ ALTER TABLE `user` ADD INDEX idx_address (address(3));
 ### 4.6 避免创建过多索引
 索引好用，适度即可。创建过多的索引，会占用更多存储空间，也会严重影响SQL性能，每次更新SQL，都需要更新大量索引文件，得不偿失。
 ## 知识点总结：
-![image-20220731215809620.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488385450-a17c9796-c70c-4fe2-9437-9e3c65509e4a.png#averageHue=%23fafafa&clientId=u1727f877-ba97-4&from=paste&height=809&id=u0966c71a&originHeight=809&originWidth=701&originalType=binary&ratio=1&rotation=0&showTitle=false&size=89977&status=done&style=none&taskId=uc2e92162-8ef7-4d10-b8cf-a7d6e4cb074&title=&width=701)
+![image-20220731215809620.png](https://javabaguwen.com/img/%E5%88%9B%E5%BB%BAMySQL%E7%B4%A2%E5%BC%95%E6%80%BB%E7%BB%93.png)

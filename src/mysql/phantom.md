@@ -14,15 +14,15 @@ CREATE TABLE `user` (
 并发事务会产生下面三个问题：
 ### 脏读
 **定义：** 一个事务读到其他事务未提交的数据。
-![](https://files.mdnice.com/user/33013/35741d2a-eb65-4eb9-aecd-6ebd4cb9f93c.png#id=Y81yT&originHeight=932&originWidth=1344&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB1.png)
 从上面的示例图中，可以看出，在事务2修改完数据，没有提交的情况。事务1已经读到事务2最新修改的数据，这种情况就属于脏读。
 ### 不可重复读
 **定义：** 一个事务读取到其他事务修改过的数据。
-![](https://files.mdnice.com/user/33013/bd54ede9-1077-4eb5-8be0-9508aeeb4e85.png#id=Vyr90&originHeight=934&originWidth=1322&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB2.png)
 从上面的示例图中，可以看出，在事务2修改完数据，并提交事务后。事务1第二次查询已经读到事务2最新修改的数据，这种情况就属于不可重复读。
 ### 幻读
 **定义：** 一个事务读取到其他事务最新插入的数据。
-![](https://files.mdnice.com/user/33013/e2396364-149c-4a4f-bccc-2f46d86dfc45.png#id=R9gJa&originHeight=984&originWidth=1318&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB3.png)
 从上面的示例图中，可以看出，在事务2插入完数据，并提交事务后。事务1第二次查询已经读到事务2最新插入的数据，这种情况就属于幻读。
 ## 2. 快照读和当前读
 再普及一下快照读和当前读。
@@ -40,15 +40,15 @@ MySQL在**Repeatable Read（可重复读）**隔离级别下，到底有没有�
 ```
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 ```
-![](https://files.mdnice.com/user/33013/15adb8fa-119e-4600-b7e7-b1c69980ff02.png#id=thuNr&originHeight=332&originWidth=934&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB4.png)
 执行测试用例，验证一下：
-![](https://files.mdnice.com/user/33013/d77972ff-f285-427d-9a63-019c84bec5bd.png#id=Wdbgs&originHeight=938&originWidth=1296&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB5.png)
 从上面的示例图中，可以看出，事务1的两次查询，得到的结果一致，并没有查到事务2最新插入的数据。
 原因是，在可重复读隔离级别下，第一次快照读的时候，生成了一个读视图。第二次快照读的时候，复用了第一次生成的读视图，所以两次查询得到的结果一致。
 所以，在快照读的情况下，**可重复读**隔离级别是解决了**幻读**的问题。
 再测试一下，在**当前读**的情况下，**可重复读**隔离级别是否解决**幻读**问题：
 
-![](https://files.mdnice.com/user/33013/a8c35298-aa68-4b06-94dd-29c51d1d5d2e.png#id=CeUg5&originHeight=952&originWidth=1570&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB6.png)
 从上面的示例图中，可以看出，事务1的两次查询，得到的结果不一致。在事务2插入数据，并提交事务后。事务1的第二次执行**当前读（加了for update）**的时候，读到了事务2最新插入的数据。
 原因是，在可重复读隔离级别下，每次执行当前读会生成一个新的**读视图**，所以能读到其他事务最新插入的数据。
 所以，在**当前读**的情况下，**可重复读**隔离级别是没有解决了**幻读**的问题。
@@ -56,10 +56,10 @@ SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 在执行上面的测试用例的时候，我忽然想到一个问题，既然select for update的当前读，出现了幻读问题，是不是其他的当前读也会复现幻读问题，比如insert。
 再执行测试用例，验证一下：
 
-![](https://files.mdnice.com/user/33013/4984749e-431b-40fa-a2b5-96371c8de780.png#id=WeM0B&originHeight=888&originWidth=1544&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB7.png)
 跟预想的一样，在insert当前读的情况下，也出现了幻读的问题（主键冲突）。
 那有没有什么办法？在**可重复读**隔离级别下，执行**当前读**的时候，也能解**决幻读**的问题？
 当然有的，唯一的办法就是**加锁**。
-![](https://files.mdnice.com/user/33013/6dcdf7eb-55c2-497c-a2db-e34f5f444ea3.png#id=D60CV&originHeight=746&originWidth=1562&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%B9%BB%E8%AF%BB8.png)
 事务1在执行第一次查询的时候，就对数据进行加锁（使用for update），防止其他事务修改数据，这样也就彻底解决了**幻读**问题。
 你觉得有什么好办法吗？

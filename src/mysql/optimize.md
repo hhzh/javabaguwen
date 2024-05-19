@@ -11,7 +11,7 @@ MySQL调优是面试中最常问的问题，但是面试者在回答这个问题
 ```sql
 show variables like '%slow_query_log_file%';
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713625073865-fac42fe3-afd4-480a-bca3-9dfe90e8213e.png#averageHue=%23f1f1f1&clientId=uc1ce16c9-2538-4&from=paste&height=248&id=u0c8e667b&originHeight=248&originWidth=986&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51647&status=done&style=none&taskId=u493b0dc7-6f6a-4d33-95a3-df5cf35f97c&title=&width=986)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL1.png)
 
 2. 使用**mysqldumpslow**命令分析慢SQL日志
 ```sql
@@ -30,12 +30,12 @@ show variables like '%slow_query_log_file%';
 ```sql
 mysqldumpslow -s r -t 10 /usr/local/mysql/data/localhost_slow.log
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713625159115-498bab9d-2b18-4284-8986-6ffd2cfcb6f4.png#averageHue=%23efefef&clientId=uc1ce16c9-2538-4&from=paste&height=178&id=u039ca20d&originHeight=178&originWidth=1292&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64774&status=done&style=none&taskId=u8ae215b3-732b-48c0-a79e-663d89dab97&title=&width=1292)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL2.png)
 查询耗时最长的10条SQL：
 ```sql
 mysqldumpslow -s t -t 10 /usr/local/mysql/data/localhost_slow.log
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713625180971-773b3dc0-da5f-4fcf-ba9f-e9f53034eb64.png#averageHue=%23efefef&clientId=uc1ce16c9-2538-4&from=paste&height=178&id=u1d23dde7&originHeight=178&originWidth=1292&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64774&status=done&style=none&taskId=u5a2409b5-bddd-4c2f-894d-b41fcc4376b&title=&width=1292)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL3.png)
 ## performance_schema 库
 performance_schema库帮助我们记录了MySQL的运行情况，很多性能问题都可以在performance_schema库中查到。
 有哪些锁等待、加锁的SQL、正在执行的事务等。
@@ -51,14 +51,14 @@ performance_schema库帮助我们记录了MySQL的运行情况，很多性能问
 ```sql
 select * from information_schema.innodb_lock_waits;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713860874033-14609d9b-8226-425c-bdfe-29cb94005587.png#averageHue=%23eeeeee&clientId=u285fc8e7-a5ac-4&from=paste&height=252&id=u1540c2f3&originHeight=252&originWidth=1122&originalType=binary&ratio=1&rotation=0&showTitle=false&size=62528&status=done&style=none&taskId=u27d47b31-9836-4818-92ba-afe10a5078a&title=&width=1122)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL4.png)
 可以看到有一个锁等待的事务。
 
 2. 查看正在竞争的锁
 ```sql
 select * from information_schema.innodb_locks;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713861499500-1f56ba03-596b-418f-b304-3f839362d79c.png#averageHue=%23f5f5f4&clientId=u285fc8e7-a5ac-4&from=paste&height=276&id=u610179b9&originHeight=276&originWidth=1908&originalType=binary&ratio=1&rotation=0&showTitle=false&size=140944&status=done&style=none&taskId=u5a49eea4-13c8-47c5-ba70-05e9b57bb37&title=&width=1908)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL5.png)
 可以看到，MySQL统计的非常详细：
 > lock_trx_id 表示事务ID 
 > lock_mode 表示排它锁还是共享锁
@@ -70,14 +70,14 @@ select * from information_schema.innodb_locks;
 ```sql
 select * from information_schema.innodb_trx;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713861545774-94ee6197-b796-4064-a74f-0d5545920f9e.png#averageHue=%23ecedeb&clientId=u285fc8e7-a5ac-4&from=paste&height=362&id=u30fa8926&originHeight=362&originWidth=1976&originalType=binary&ratio=1&rotation=0&showTitle=false&size=122413&status=done&style=none&taskId=u8c22eaac-7786-4a3a-9538-eebf57982c4&title=&width=1976)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL6.png)
 可以清楚的看到正在执行的事务有两个，一个状态是锁等待（LOCK WAIT），正在执行的SQL也打印出来了。
 
 4. 查看事务线程
 ```sql
 select * from performance_schema.threads where processlist_id=193;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713861631381-4c9b3288-cad7-4c56-97de-483b0d104b96.png#averageHue=%23f1f1f0&clientId=u285fc8e7-a5ac-4&from=paste&height=334&id=uba874885&originHeight=334&originWidth=1970&originalType=binary&ratio=1&rotation=0&showTitle=false&size=101063&status=done&style=none&taskId=u70bf6ad3-0c48-4033-81f8-65b647c98da&title=&width=1970)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL7.png)
 
 5. 查看线程正在执行的SQL语句
 ```sql
@@ -85,13 +85,13 @@ select THREAD_ID,CURRENT_SCHEMA,SQL_TEXT
 from performance_schema.events_statements_current 
 where thread_id=218;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713861668183-99d8b802-c53c-4db7-8214-7567f43800a0.png#averageHue=%23ebedec&clientId=u285fc8e7-a5ac-4&from=paste&height=322&id=u53e1cc3e&originHeight=322&originWidth=1962&originalType=binary&ratio=1&rotation=0&showTitle=false&size=107371&status=done&style=none&taskId=u5ae50977-1d8b-4936-9f34-9d6aaa73c66&title=&width=1962)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL8.png)
 # 优化慢SQL
 ## explain执行计划
 最常用的方案就是使用explain命令，查看SQL的索引使用情况。
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713858630946-819d9bfe-3b4d-4ecd-ac3c-759a5d8f855d.png#averageHue=%23fafafa&clientId=ue91ecc20-be6a-4&from=paste&height=2238&id=ucb586f08&originHeight=2238&originWidth=1856&originalType=binary&ratio=1&rotation=0&showTitle=false&size=394979&status=done&style=none&taskId=ue5213c96-5d64-4f29-b6cb-bcda6b95679&title=&width=1856)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL9.png)
 优先查看type字段，可以看到是否用到索引？用到了哪种索引？性能由好到差依次是：
-> system > const > eq_ref > ref  > ref_or_null > index_merge > range > index > ALL
+> system > const > eq_ref > ref > ref_or_null > index_merge > range > index > ALL
 
 再看一下key_len（索引长度），可以看出用到了联合索引中的前几列。
 再看一下rows（预估扫描行数），如果扫描行数过多，表示匹配到结果数过多，会出现慢SQL，可以修改查询条件，缩减查询范围，减少扫描行数。
@@ -110,7 +110,7 @@ where thread_id=218;
 8. 避免创建过多索引
 ## 优化查询规范
 总结了一些使用MySQL查询的规范，遵守可以提高查询效率。
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713860423577-c1edb848-976f-47fd-a2a7-33831d69a224.png#averageHue=%23f8f8f8&clientId=ue91ecc20-be6a-4&from=paste&height=758&id=u4d780961&originHeight=758&originWidth=548&originalType=binary&ratio=1&rotation=0&showTitle=false&size=86672&status=done&style=none&taskId=ub3c5a79d-8b23-4ed6-ab30-20728fb9385&title=&width=548)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL10.png)
 ## 索引失效
 如果遇到索引失效，也有可能出现慢SQL。常见的索引失效场景有如下这些：
 
@@ -133,7 +133,7 @@ optimizer trace同样也是在information_schema库中。
 ```sql
 SELECT * FROM information_schema.OPTIMIZER_TRACE;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713859927593-a31521b7-8dc1-4857-9929-686a0968ba5a.png#averageHue=%23f3f3f3&clientId=ue91ecc20-be6a-4&from=paste&height=178&id=u1bd711f0&originHeight=178&originWidth=975&originalType=binary&ratio=1&rotation=0&showTitle=false&size=23662&status=done&style=none&taskId=u89edb806-6e14-4708-a7f3-af982378c7e&title=&width=975)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL11.png)
 输出结果共有4列：
 > QUERY 表示我们执行的查询语句 
 > TRACE 优化器生成执行计划的过程（重点关注） 
@@ -141,7 +141,7 @@ SELECT * FROM information_schema.OPTIMIZER_TRACE;
 > INSUFFICIENT_PRIVILEGES 表示是否有权限查看优化过程，0是，1否
 
 接下来我们看一下TRACE列的内容，里面的数据很多，我们重点分析一下range_scan_alternatives结果列，这个结果列展示了索引选择的过程。
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713859965640-7520d013-846d-4025-8b51-cf7fe91525ed.png#averageHue=%231a354b&clientId=ue91ecc20-be6a-4&from=paste&height=740&id=u8f3dfde5&originHeight=740&originWidth=516&originalType=binary&ratio=1&rotation=0&showTitle=false&size=75793&status=done&style=none&taskId=u9e3684f5-981a-424a-907c-643a3115ca6&title=&width=516)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL12.png)
 输出结果字段含义：
 > index 索引名称
 > ranges 查询范围
@@ -162,7 +162,7 @@ SELECT * FROM information_schema.OPTIMIZER_TRACE;
 ```sql
 show engine innodb status;
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713860684651-f1575bac-cbdd-4974-a1b7-6a3625c31d02.png#averageHue=%2337495a&clientId=ue91ecc20-be6a-4&from=paste&height=2367&id=udf51a3b6&originHeight=2367&originWidth=1500&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1680855&status=done&style=none&taskId=u516c6e43-b529-4f1b-963d-8cf7c98dd18&title=&width=1500)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL13.png)
 在死锁日志中，可以清楚地看到这两条insert语句产生了死锁，最终事务2被会回滚，事务1执行成功。
 ```sql
 # 事务1
@@ -188,4 +188,4 @@ insert into user (id,name,age) values (6,'李四',6);
    - information_schema.profiling 分析SQL每一步的耗时，查询性能瓶颈
 ## 分库分表
 如果常规的SQL优化手段不起作用，就可以进行分库分表。
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1713861948228-b1d2a6b5-f758-4389-a307-034df02e7ae7.png#averageHue=%23f8f8f8&clientId=u285fc8e7-a5ac-4&from=paste&height=868&id=ub57a2fcc&originHeight=868&originWidth=2344&originalType=binary&ratio=1&rotation=0&showTitle=false&size=275900&status=done&style=none&taskId=ud6b99465-89cf-44d4-8c27-b45b48b21cc&title=&width=2344)
+![image.png](https://javabaguwen.com/img/%E4%BC%98%E5%8C%96MySQL14.png)

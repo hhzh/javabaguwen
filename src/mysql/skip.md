@@ -32,8 +32,6 @@ select * from table_name where b=? and c=?;
 > 什么遵循不遵循？ 
 > 难道是面试官跟我背的八股文不是同一套？
 
-![what.jpeg](https://cdn.nlark.com/yuque/0/2023/jpeg/12651402/1686488883135-11021cc2-3b87-4e91-8371-5e50de3ca814.jpeg#averageHue=%23e3e3e3&clientId=uc43ab76e-0222-4&from=paste&height=331&id=ub239cf35&originHeight=331&originWidth=330&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16448&status=done&style=none&taskId=u25a3839f-3588-494e-b822-c8f2bd4c99a&title=&width=330)
-
 回去到MySQL官网上翻了一下，才发现面试官想问的是**索引跳跃扫描（Index Skip Scan）**。
 MySQL8.0版本开始增加了**索引跳跃扫描**的功能，当第一列索引的唯一值较少时，即使where条件没有第一列索引，查询的时候也可以用到联合索引。
 造点数据验证一下，先创建一张用户表：
@@ -51,7 +49,7 @@ CREATE TABLE `user` (
 ```
 explain select * from user where name='一灯';
 ```
-![image-20220803213714714.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488891150-3d79bb64-4d17-4158-a185-530a0b8f1f23.png#averageHue=%23f3f2f1&clientId=uc43ab76e-0222-4&from=paste&height=262&id=uf711e427&originHeight=262&originWidth=2284&originalType=binary&ratio=1&rotation=0&showTitle=false&size=150558&status=done&style=none&taskId=ua423a046-f6de-4f6d-9a73-949cd77c167&title=&width=2284)
+![image-20220803213714714.png](https://javabaguwen.com/img/%E7%B4%A2%E5%BC%95%E8%B7%B3%E8%B7%83.png)
 虽然SQL查询条件只有name字段，但是从执行计划中看到依然是用了联合索引。
 并且Extra列中显示增加了**Using index for skip scan**，表示用到了**索引跳跃扫描**的优化逻辑。
 具体优化方式，就是匹配的时候遇到第一列索引就跳过，直接匹配第二列索引的值，这样就可以用到联合索引了。
@@ -60,5 +58,4 @@ explain select * from user where name='一灯';
 select * from user where gender in (0,1) and name='一灯';
 ```
 看来还是需要经常更新自己的知识体系，一不留神就out了！
-![学无止境.jpeg](https://cdn.nlark.com/yuque/0/2023/jpeg/12651402/1686488908596-b0100995-ecde-42cc-a7a8-ed7f7808a248.jpeg#averageHue=%234a5347&clientId=uc43ab76e-0222-4&from=paste&height=583&id=uc3c1090e&originHeight=583&originWidth=656&originalType=binary&ratio=1&rotation=0&showTitle=false&size=131552&status=done&style=none&taskId=u1e45373e-42e7-44b4-be2f-6b270c7ed38&title=&width=656)
 

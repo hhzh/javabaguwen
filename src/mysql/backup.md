@@ -29,12 +29,12 @@ mysqldump -uroot -p --single-transaction test > backup.db
 ```
 show variables like 'read_only';
 ```
-![](https://files.mdnice.com/user/33013/497077d4-5150-4a2c-9f80-3b09f87313f1.png#id=nX7C0&originHeight=248&originWidth=668&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE1.png)
 OFF表示只读模式关闭，ON表示开启只读模式。
 ```
 set global read_only=1;
 ```
-![](https://files.mdnice.com/user/33013/3e1cceee-f8e0-4ab6-9463-ae7a5fcc7a98.png#id=qsqfX&originHeight=344&originWidth=672&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+![](https://javabaguwen.com/img/%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE2.png)
 
 这样设置其实是非常危险的，如果客户端连接断开，整个数据库也会一直处于只读模式，无法进行写操作。
 更推荐的办法是设置**全局锁  FTWRL（flush tables with read lock）**。

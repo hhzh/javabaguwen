@@ -1,6 +1,6 @@
 # 死锁现象
 线上MySQL死锁了，我赶紧登录线上系统，查看业务日志。
-![image-20220608112347888.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487279908-fb9503ee-dc2e-45a5-9332-b29e80dd4e2a.png#averageHue=%23384656&clientId=u4c0071e8-710e-4&from=paste&height=752&id=ub2cf7df7&originHeight=752&originWidth=1262&originalType=binary&ratio=1&rotation=0&showTitle=false&size=963676&status=done&style=none&taskId=u61a98b77-4b6d-4707-9f33-b3e04d5c600&title=&width=1262)
+![image-20220608112347888.png](https://javabaguwen.com/img/%E6%AD%BB%E9%94%811.png)
 能清楚看到是这条insert语句发生了死锁。
 MySQL如果检测到两个事务发生了死锁，会回滚其中一个事务，让另一个事务执行成功。很明显，我们这条insert语句被回滚了。
 ```sql
@@ -13,7 +13,7 @@ insert into user (id, name, age) values (6, '张三', 6);
 ```sql
 show engine innodb status;
 ```
-![死锁日志.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487291124-bb1a49d7-ca91-4f73-bfba-f2fc8c692334.png#averageHue=%23344657&clientId=u4c0071e8-710e-4&from=paste&height=2986&id=uaa0404ba&originHeight=2986&originWidth=1892&originalType=binary&ratio=1&rotation=0&showTitle=false&size=851902&status=done&style=none&taskId=ubd0456d6-3a35-4f25-ae76-bc25018e226&title=&width=1892)
+![死锁日志.png](https://javabaguwen.com/img/%E6%AD%BB%E9%94%812.png)
 在死锁日志中，可以清楚地看到这两条insert语句产生了死锁，最终事务2被会回滚，事务1执行成功。
 ```sql
 # 事务1
@@ -41,7 +41,7 @@ public void insertUser(User user) {
 业务逻辑代码很简单，如果userId不存在，就插入数据，否则更新user对象数据。
 从死锁日志中，我们看到有两条insert语句，很明显userId=5和userId=6的数据都不存在。
 所以对应的SQL执行过程，可能就是这样的：
-![image-20220608174554212.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487303759-a085b0d2-76fd-4d29-8ead-a0d0315dcabc.png#averageHue=%23efeeee&clientId=u4c0071e8-710e-4&from=paste&height=347&id=u09e4a2a7&originHeight=347&originWidth=756&originalType=binary&ratio=1&rotation=0&showTitle=false&size=79390&status=done&style=none&taskId=u142ab8e0-ca6a-4db1-a584-85b8dcc6d1d&title=&width=756)
+![image-20220608174554212.png](https://javabaguwen.com/img/%E6%AD%BB%E9%94%813.png)
 先用for update加上排他锁，防止其他事务修改当前数据，然后再insert数据，最后发生了死锁，事务2被回滚。
 两个事务分别在两个主键ID上面加锁，为什么会产生死锁呢？
 # 底层原理
@@ -60,8 +60,8 @@ select * from user where id=5 for update;
 ```
 这条select语句锁定范围就是 **(1, 10]**。
 最后两个事务的执行过程就变成了：
-![image-20220608180913949.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487321161-516f966a-a14d-4580-8dbd-7ddac5f2d751.png#averageHue=%23f0efee&clientId=u4c0071e8-710e-4&from=paste&height=400&id=yuEaF&originHeight=400&originWidth=760&originalType=binary&ratio=1&rotation=0&showTitle=false&size=104586&status=done&style=none&taskId=u138a0284-6ad0-4a81-9f9b-cb414a7280f&title=&width=760)
-通过这个示例看到，两个事务都可以先后锁定 **(1, 10]**这个范围，说明MySQL默认加的临键锁的范围是可以交叉的。
+![image-20220608180913949.png](https://javabaguwen.com/img/%E6%AD%BB%E9%94%814.png)
+通过这个示例看到，两个事务都可以先后锁定 **(1, 10]** 这个范围，说明MySQL默认加的临键锁的范围是可以交叉的。
 那怎么解决这个死锁问题呢？
 我能想到的解决办法就是，把这两个语句select和insert，合并成一条语句：
 ```sql

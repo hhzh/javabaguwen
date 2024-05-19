@@ -18,7 +18,7 @@ Redo Log记录的是物理日志，也就是磁盘数据的修改。
 2. 在内存中修改数据
 3. 把新数据持久化到磁盘
 
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1710829070500-a961c121-3f86-4d34-a017-1b3c53e5f7df.png#averageHue=%23f4f4f4&clientId=u0415d217-3cb3-4&from=paste&height=680&id=u217b9fe6&originHeight=680&originWidth=896&originalType=binary&ratio=1&rotation=0&showTitle=false&size=138407&status=done&style=none&taskId=ud351da9c-0c05-4456-aa34-4236741299a&title=&width=896)
+![image.png](https://javabaguwen.com/img/MySQL%E4%BA%8B%E5%8A%A11.png)
 这样做，会有严重的性能问题。
 
 1. InnoDB在磁盘中存储的基本单元是页，可能本次修改只变更一页中几个字节，但是需要刷新整页的数据，就很浪费资源。
@@ -34,13 +34,13 @@ Redo Log记录的是物理日志，也就是磁盘数据的修改。
 4. 把**Redo Log Buffer**中数据持久化到**Redo Log**文件中
 5. 把**Redo Log**文件中数据持久化到数据库磁盘中
 
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1710829097732-66d4972b-d1aa-4836-a107-fb5af1a44b5f.png#averageHue=%23c4d8c1&clientId=u0415d217-3cb3-4&from=paste&height=966&id=u1a3bab53&originHeight=966&originWidth=1004&originalType=binary&ratio=1&rotation=0&showTitle=false&size=264123&status=done&style=none&taskId=u0dbcf09b-db53-4dee-b029-ea645666836&title=&width=1004)
+![image.png](https://javabaguwen.com/img/MySQL%E4%BA%8B%E5%8A%A12.png)
 
 **Undo Log（回滚日志）：**
 Undo Log记录的是逻辑日志，用来回滚事务时，恢复到修改前的数据。
 比如：当我们执行一条insert语句时，Undo Log就记录一条相反的delete语句。
 加入Undo Log之后的修改流程就是这样的：
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1710829112236-d69dce66-301c-470b-b912-6bcdb0c267d0.png#averageHue=%23c6dbc3&clientId=u0415d217-3cb3-4&from=paste&height=929&id=u79e664e9&originHeight=929&originWidth=1500&originalType=binary&ratio=1&rotation=0&showTitle=false&size=377553&status=done&style=none&taskId=ue07b6b39-c90a-4858-bc4a-bbb7f404faf&title=&width=1500)
+![image.png](https://javabaguwen.com/img/MySQL%E4%BA%8B%E5%8A%A13.png)
 **MVCC（多版本并发控制，Multi-Version Concurrency Control）：**
 
 记录的是某个时间点上的数据快照，用来实现不同事务之间数据的隔离性。
@@ -64,7 +64,7 @@ MVCC解决了读写冲突，实现了并发读写，提升了事务的性能。
 由于Read UnCommitted隔离级别下，每次都读取最新的数据。而Serializable隔离级别下，对所有读取数据都加锁。这两种隔离级不需要MVCC，所以MVCC只在Read Committed和Repeatable Read两种隔离级别下起作用。
 
 MVCC的实现方式通过两个隐藏列trx_id（最近一次提交事务的ID）和roll_pointer（上个版本的地址），建立一个版本链。并在事务中读取的时候生成一个ReadView（读视图），在Read Committed隔离级别下，每次读取都会生成一个读视图，而在Repeatable Read隔离级别下，只会在第一次读取时生成一个读视图。
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/12651402/1710829136244-cdf7e59b-dd75-4955-ab3f-5a7fcc9cec88.png#averageHue=%23f4f4f4&clientId=u0415d217-3cb3-4&from=paste&height=684&id=ubc6005d1&originHeight=684&originWidth=1326&originalType=binary&ratio=1&rotation=0&showTitle=false&size=192971&status=done&style=none&taskId=uaf7668c5-88e2-40ee-b65b-cc2df1e1a59&title=&width=1326)
+![image.png](https://javabaguwen.com/img/MySQL%E4%BA%8B%E5%8A%A14.png)
 
 InnoDB如何解决幻读的？
 先普及一下快照读和当前读。
@@ -77,4 +77,4 @@ InnoDB如何解决幻读的？
 在当前读的情况下，是通过加锁来解决幻读。
 在快照读的情况下，是通过MVCC来解决幻读。
 ### **本文知识点总结：**
-![iShot2022-05-16 16.58.56.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487103636-474ddadf-21cd-4a5c-85b3-4ebae0c82e35.png#averageHue=%23eaeaea&clientId=u475ec09f-2153-4&from=paste&height=2492&id=u07f4eabc&originHeight=2492&originWidth=2780&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1248218&status=done&style=none&taskId=u167dd146-b556-4a6c-8a27-bdec3ff74d5&title=&width=2780)
+![iShot2022-05-16 16.58.56.png](https://javabaguwen.com/img/MySQL%E4%BA%8B%E5%8A%A1%E6%80%BB%E7%BB%93.png)

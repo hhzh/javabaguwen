@@ -3,7 +3,7 @@
 我精心总结了这16条MySQL规约，分享给大家，欢迎评论指正。
 ## 1. 禁止使用select  *
 阿里开发规范中，有这么一句话：
-![image-20220731221303210.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488448634-2ec6aeb0-ff42-442d-bbdf-4d797fe36dbc.png#averageHue=%23f5f3f1&clientId=u51c9ec4a-7dba-4&from=paste&height=110&id=u13db9e9c&originHeight=110&originWidth=707&originalType=binary&ratio=1&rotation=0&showTitle=false&size=34385&status=done&style=none&taskId=u27a106ce-1ddc-41c8-89fd-51511a49005&title=&width=707)
+![image-20220731221303210.png](https://javabaguwen.com/img/MySQL%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%831.png)
 **select *** 会查询表中所有字段，如果表中的字段有更改，必须修改SQL语句，不然就会执行错误。
 查询出非必要的字段，徒增磁盘IO和网络延迟。
 ## 2. 用小表驱动大表
@@ -30,7 +30,7 @@ select * from user where name='%一灯%';
 根据B+树的特性，即使我们在name字段上建立了索引，查询的时候也是无法用到索引的。
 ## 5. 索引访问类型至少达到range级别
 索引访问类型常见的有这几个级别，从上到下，性能由好到差。
-![image-20220731223132721.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488460426-1513eda2-15f2-4fee-b6ee-007c2cfc0d25.png#averageHue=%23f7f7f7&clientId=u51c9ec4a-7dba-4&from=paste&height=464&id=u5d329310&originHeight=464&originWidth=576&originalType=binary&ratio=1&rotation=0&showTitle=false&size=58411&status=done&style=none&taskId=u783a946d-3e1c-4ce4-83c5-76768cae6b0&title=&width=576)
+![image-20220731223132721.png](https://javabaguwen.com/img/MySQL%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%832.png)
 
 要求SQL索引访问类型至少要达到**range**级别，最好到**const**级别。
 ## 6. 更优雅的使用联合索引
@@ -42,7 +42,7 @@ select
     count(distinct gender)/count(*) 
 from user;
 ```
-![image-20220730230017044.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488467741-a9b48459-f946-4b97-8428-af486c60db57.png#averageHue=%23f3f3f2&clientId=u51c9ec4a-7dba-4&from=paste&height=442&id=u4bae141a&originHeight=442&originWidth=902&originalType=binary&ratio=1&rotation=0&showTitle=false&size=120413&status=done&style=none&taskId=ubc53abc6-ca09-4c11-9e49-f7ada0f66d6&title=&width=902)
+![image-20220730230017044.png](https://javabaguwen.com/img/MySQL%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%833.png)
 值越大，区分度越高。
 出道面试题，下面这条SQL该怎么创建联合索引：
 ```
@@ -124,4 +124,4 @@ delete from order where id in (?,?,?);
 ```
 使用第二种操作，锁定的行数更少，使用主键ID执行的操作更快，还能分批操作，审计日志还能记录具体更新了哪些数据。
 ## 知识点总结：
-![image-20220731231221066.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686488479008-9ac365d9-0005-44f4-950c-5a29602b6fd2.png#averageHue=%23f8f8f8&clientId=u51c9ec4a-7dba-4&from=paste&height=758&id=ua36290f3&originHeight=758&originWidth=548&originalType=binary&ratio=1&rotation=0&showTitle=false&size=86986&status=done&style=none&taskId=u1496d377-bbe1-4092-84f7-054e37085bc&title=&width=548)
+![image-20220731231221066.png](https://javabaguwen.com/img/MySQL%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%834.png)

@@ -82,7 +82,7 @@ update user set name='一灯' where age=5;
 
 我们可以用实际数据测试一下：
 
-![image-20220605183947376.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487208749-a42f157a-a2f4-4b57-9c75-b18c8cfc2eb5.png#averageHue=%23f0efef&clientId=u04ab60e2-97cd-4&from=paste&height=347&id=u48699890&originHeight=347&originWidth=979&originalType=binary&ratio=1&rotation=0&showTitle=false&size=87544&status=done&style=none&taskId=u29c68384-4797-47de-9552-8b598d781c1&title=&width=979)
+![image-20220605183947376.png](https://javabaguwen.com/img/%E5%8A%A0%E9%94%81%E8%8C%83%E5%9B%B41.png)
 
 当我们执行update语句的时候，age=2和age=8的数据范围都被加锁了。
 
@@ -116,7 +116,7 @@ age=5的数据落在 **(1,5]** 的区间范围内，所以会对 **(1,5]** 的�
 
 跟刚才age=5不存在的加锁范围 **(1,10]** 是一样的。不信可以再用刚才的测试用例跑一遍。
 
-![image-20220605185742371.png](https://cdn.nlark.com/yuque/0/2023/png/12651402/1686487219631-3201dfdf-1a30-4361-8c99-c579b8b7e8ea.png#averageHue=%23f0efef&clientId=u04ab60e2-97cd-4&from=paste&height=347&id=ua95eb4a9&originHeight=347&originWidth=979&originalType=binary&ratio=1&rotation=0&showTitle=false&size=87544&status=done&style=none&taskId=ud4c08f3b-67bb-4c7f-95e8-2e066995b85&title=&width=979)
+![image-20220605185742371.png](https://javabaguwen.com/img/%E5%8A%A0%E9%94%81%E8%8C%83%E5%9B%B42.png)
 
 **面试官：** 小伙子有点东西。如果我把SQL中where条件换成主键ID，加锁范围是什么样的？
 
