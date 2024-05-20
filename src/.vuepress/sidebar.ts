@@ -10,9 +10,25 @@ export default sidebar({
         "map",
     ],
     "/tool/": [
-        "README.md",
-        "git",
-        "CodeReview",
+        {
+            text: "工具清单",
+            collapsible: true,
+            children: [
+                {
+                    text: "Git教程",
+                    link: "git",
+                },
+                {
+                    text: "CodeReview流程",
+                    link: "CodeReview",
+                },
+                {
+                    text: "Guava Cache缓存",
+                    link: "GuavaCache",
+                },
+            ]
+        },
+
         // "Linux",
         // "Maven",
         // "Arthas",
@@ -53,28 +69,74 @@ export default sidebar({
             collapsible: true,
             children: [
                 {
-                    text: "3.1 Java集合",
+                    text: "Java集合",
                     collapsible: true,
+                    prefix: "list/",
                     children: [
-                        "readme.md",
-                        "array-list",
-                        "linked-list",
-                        "hash-map",
-                        "linked-hash-map",
-                        "tree-map",
-                        "set",
-                        "copy-on-write-array-list",
-                        "con-current-hash-map",
-                        "array-blocking-queue",
-                        "linked-blocking-queue",
-                        "synchronous-queue",
-                        "priority-queue",
-                        "delay-queue",
-                        "blocking-collection"
+                        {
+                            text: "ArrayList",
+                            link: "ArrayList",
+                        },
+                        {
+                            text: "LinkedList",
+                            link: "LinkedList",
+                        },
+                        {
+                            text: "HashMap",
+                            link: "HashMap",
+                        },
+                        {
+                            text: "LinkedHashMap",
+                            link: "LinkedHashMap",
+                        },
+                        {
+                            text: "TreeMap",
+                            link: "TreeMap",
+                        },
+                        {
+                            text: "Set集合",
+                            link: "Set",
+                        },
+                        {
+                            text: "CopyOnWriteArrayList",
+                            link: "CopyOnWriteArrayList",
+                        },
+                        {
+                            text: "ConcurrentHashMap",
+                            link: "ConcurrentHashMap",
+                        },
+                        {
+                            text: "LinkedList",
+                            link: "LinkedList",
+                        },
+                        {
+                            text: "ArrayBlockingQueue",
+                            link: "ArrayBlockingQueue",
+                        },
+                        {
+                            text: "LinkedBlockingQueue",
+                            link: "LinkedBlockingQueue",
+                        },
+                        {
+                            text: "SynchronousQueue",
+                            link: "SynchronousQueue",
+                        },
+                        {
+                            text: "PriorityQueue",
+                            link: "PriorityQueue",
+                        },
+                        {
+                            text: "DelayQueue",
+                            link: "DelayQueue",
+                        },
+                        {
+                            text: "BlockingQueue合集",
+                            link: "BlockingQueue合集",
+                        },
                     ],
                 },
                 {
-                    text: "3.2 Java并发",
+                    text: "Java并发",
                     collapsible: true,
                     children: [
                         "readme.md",
