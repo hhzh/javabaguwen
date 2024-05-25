@@ -106,10 +106,6 @@ export default sidebar({
                             link: "ConcurrentHashMap",
                         },
                         {
-                            text: "LinkedList",
-                            link: "LinkedList",
-                        },
-                        {
                             text: "ArrayBlockingQueue",
                             link: "ArrayBlockingQueue",
                         },
@@ -138,20 +134,52 @@ export default sidebar({
                 {
                     text: "Java并发",
                     collapsible: true,
+                    prefix: "concurrency/",
                     children: [
-                        "readme.md",
-                        "thread",
-                        "thread-pool",
-                        "aqs",
-                        "reentrant-lock",
-                        "count-down-latch",
-                        "linked-hash-map",
-                        "semaphore",
-                        "cyclic-barrier",
-                        "thread-local",
-                        "atomic-integer",
-                        "synchronized",
-                        "volatile",
+                        {
+                            text: "AQS",
+                            link: "AQS"
+                        },
+                        {
+                            text: "ReentrantLock",
+                            link: "ReentrantLock"
+                        },
+                        {
+                            text: "CountDownLatch",
+                            link: "CountDownLatch"
+                        },
+                        {
+                            text: "Semaphore",
+                            link: "Semaphore"
+                        },
+                        {
+                            text: "CyclicBarrier",
+                            link: "CyclicBarrier"
+                        },
+                        {
+                            text: "ThreadLocal",
+                            link: "ThreadLocal"
+                        },
+                        {
+                            text: "线程",
+                            link: "Thread"
+                        },
+                        {
+                            text: "线程池",
+                            link: "ThreadPool"
+                        },
+                        {
+                            text: "Synchronized",
+                            link: "Synchronized"
+                        },
+                        {
+                            text: "volatile",
+                            link: "volatile"
+                        },
+                        {
+                            text: "AtomicInteger",
+                            link: "AtomicInteger"
+                        },
                     ],
                 },
             ]

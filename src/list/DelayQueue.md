@@ -52,6 +52,7 @@ public class DelayQueue<E extends Delayed>
 }
 ```
 ![image.png](https://javabaguwen.com/img/DelayQueue1.png)
+
 `DelayQueue`实现了`BlockingQueue`接口，是一个阻塞队列。并且`DelayQueue`里面的元素需要实现`Delayed`接口。使用了`ReentrantLock`保证线程安全，使用了`Condition`作条件队列，当队列中没有过期元素的时候，取数据的线程需要在条件队列中等待。
 ```java
 public interface Delayed extends Comparable<Delayed> {
