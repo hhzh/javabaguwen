@@ -198,16 +198,12 @@ export default sidebar({
                     link: "engine",
                 },
                 {
-                    text: "4.3 B+树索引",
-                    link: "b",
+                    text: "4.3 索引",
+                    link: "index",
                 },
                 {
                     text: "4.4 Explain执行计划",
                     link: "explain",
-                },
-                {
-                    text: "4.5 索引失效场景",
-                    link: "expire",
                 },
                 {
                     text: "4.6 MySQL日志",
@@ -240,10 +236,6 @@ export default sidebar({
                 {
                     text: "4.13 深分页问题",
                     link: "page",
-                },
-                {
-                    text: "4.14 创建MySQL索引",
-                    link: "create",
                 },
                 {
                     text: "4.15 MySQL使用规范",
