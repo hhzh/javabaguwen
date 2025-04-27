@@ -6,8 +6,7 @@ export default defineUserConfig({
 
   lang: "zh-CN",
   title: "Java八股文网",
-  description: "Java八股文网，打造史上最全八股文网站",
-
+  description: "Java八股文网，史上最全的Java八股文网站",
   theme,
 
   // 和 PWA 一起启用

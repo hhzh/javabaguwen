@@ -26,6 +26,10 @@ export default sidebar({
                     text: "Guava Cache缓存",
                     link: "GuavaCache",
                 },
+                {
+                    text: "Arthas",
+                    link: "Arthas",
+                },
             ]
         },
 
@@ -206,7 +210,7 @@ export default sidebar({
                     link: "explain",
                 },
                 {
-                    text: "4.6 MySQL日志",
+                    text: "4.6 日志",
                     link: "log",
                 },
                 {
@@ -214,7 +218,7 @@ export default sidebar({
                     link: "slow",
                 },
                 {
-                    text: "4.8 MySQL锁",
+                    text: "4.8 锁",
                     link: "lock",
                 },
                 {
