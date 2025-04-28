@@ -2,7 +2,7 @@ import { defineUserConfig } from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: "/",
+  base: "/javabaguwen/",
 
   lang: "zh-CN",
   title: "Java八股文网",
